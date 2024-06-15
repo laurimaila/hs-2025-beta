@@ -1,6 +1,6 @@
 <script lang="ts">
 	//import { Button } from 'flowbite-svelte'
-	import Filters from '$lib/components/songFilters.svelte';
+	import Filters from '$lib/components/SongFilters.svelte';
 	import { afterUpdate, onMount } from 'svelte';
 	import songData from '$lib/data/songs.json';
 	import type { SongType } from '$lib/types/song';
