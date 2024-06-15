@@ -1,28 +1,29 @@
-<script lang="ts">
+<script lang="js">
+	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import nettisivu_k1 from '$lib/images/kevatpaivanseisaus/nettisivu_k1.png';
 	import nettisivu_k2 from '$lib/images/kevatpaivanseisaus/nettisivu_k2.png';
 	import nettisivu_k3 from '$lib/images/kevatpaivanseisaus/nettisivu_k3.png';
 	import nettisivu_k4 from '$lib/images/kevatpaivanseisaus/nettisivu_k4.png';
-	import tatu from '$lib/images/kevatpaivanseisaus/tatu.png';
+	import tatu from '$lib/images/kevatpaivanseisaus/tatu.avif';
 	import zombie from '$lib/images/kevatpaivanseisaus/zombie.png';
-	import Video from '$lib/components/video.svelte';
-	import kasi from '$lib/images/kevatpaivanseisaus/kasi.png';
-	import kasvit from '$lib/images/kevatpaivanseisaus/kasvit.png';
-	import o_sydan from '$lib/images/kevatpaivanseisaus/o_sydan.png';
-	import v_sydan from '$lib/images/kevatpaivanseisaus/v_sydan.png';
-	import verho1 from '$lib/images/kevatpaivanseisaus/verho1.png';
-	import verho2 from '$lib/images/kevatpaivanseisaus/verho2.png';
-	import verho3 from '$lib/images/kevatpaivanseisaus/verho3.png';
-	import Sponsors from '$lib/components/sponsors.svelte';
-	import Quizz from '$lib/components/quizz.svelte';
+	import Video from '$lib/components/Video.svelte';
+	import kasi from '$lib/images/kevatpaivanseisaus/kasi.avif';
+	import kasvit from '$lib/images/kevatpaivanseisaus/kasvit.avif';
+	import o_sydan from '$lib/images/kevatpaivanseisaus/o_sydan.webp';
+	import v_sydan from '$lib/images/kevatpaivanseisaus/v_sydan.webp';
+	import verho1 from '$lib/images/kevatpaivanseisaus/verho1.avif';
+	import verho2 from '$lib/images/kevatpaivanseisaus/verho2.avif';
+	import verho3 from '$lib/images/kevatpaivanseisaus/verho3.avif';
+	import Sponsors from '$lib/components/Sponsors.svelte';
+	import Quizz from './components/Quizz.svelte';
 
 	export let data;
-    const sponsors = data.sponsors
 
 	let quizz_id = 4;
 
-	let scrollY = 0;
+	let x = 0;
+	let scrollY = x > 800 ? 0 : 20;
 	let kapow;
 
 	let handElement;
@@ -60,7 +61,8 @@
 	};
 
 	const handleScroll = () => {
-		scrollY = window.scrollY;
+		scrollY = (x < 768) | !x ? Math.max(window.scrollY, 20) : window.scrollY;
+
 		[handIsInView, handInitialScrollY] = handleElementScroll(
 			handElement,
 			handIsInView,
@@ -126,59 +128,55 @@
 			tatuInitialRotation = 60;
 		}
 	});
-	let x = 0;
 </script>
 
 <svelte:window on:scroll={handleScroll} bind:innerWidth={x} />
+
 <div class="page-wrapper">
 	<div class="parallax-container">
 		<img
 			class="image"
 			src={nettisivu_k1}
-			alt="Kerros 1"
-			style={x > 800 ? `transform: translateY(${scrollY * 0.8}px);` : ''}
-		/>
+			alt="Taustakerros 1"
+			style={x > 800 ? `transform: translateY(${scrollY * 0.8}px);` : ''} />
 		<div id="top" class="production-logo" style="transform: translateY({scrollY * 1.5}px);">
 			<h1 class="neon logo">
 				<div>KE<span class="flicker-slow">V</span>ÄT</div>
 				<div>P<span class="flicker-slow">Ä</span>IVÄN</div>
 				<div>
-					SEI<span class="flicker-slow">S</span>A<span class="flicker-fast u-turn">U</span>S
+					SEI<span class="flicker-slow">S</span>A<span class="flicker-fast u-turn">U</span
+					>S
 				</div>
 			</h1>
 		</div>
 		<img
 			class="image"
 			src={nettisivu_k2}
-			alt="Kerros 2"
-			style={x > 800 ? `transform: translateY(${scrollY * 0.6}px);` : ''}
-		/>
+			alt="taustakerros 2"
+			style={x > 800 ? `transform: translateY(${scrollY * 0.6}px);` : ''} />
 		<img
 			class="image"
 			src={nettisivu_k3}
-			alt="Kerros 3"
-			style={x > 800 ? `transform: translateY(${scrollY * 0.4}px);` : ''}
-		/>
+			alt="taustakerros 3"
+			style={x > 800 ? `transform: translateY(${scrollY * 0.4}px);` : ''} />
 		<img
 			class="image"
 			src={nettisivu_k4}
-			alt="Kerros 4"
-			style={x > 800 ? `transform: translateY(${scrollY * 0.1}px);` : ''}
-		/>
+			alt="taustakerros 4"
+			style={x > 800 ? `transform: translateY(${scrollY * 0.1}px);` : ''} />
 	</div>
 
 	<div class="content">
 		<div class="comic">
 			<div class="first-panel panel">
-				<div class="plants"><img src={kasvit} /></div>
+				<div class="plants"><img src={kasvit} alt="kasvit" /></div>
 				<div
 					bind:this={handElement}
 					class="hand"
 					style={handIsInView
 						? `transform: translateY(${(scrollY - handInitialScrollY) * 0.1}px) translateX(${(scrollY - handInitialScrollY) * -0.1}px);`
-						: ''}
-				>
-					<img src={kasi} />
+						: ''}>
+					<img src={kasi} alt="käsi" />
 				</div>
 			</div>
 			<div class="second-panel panel">
@@ -187,47 +185,43 @@
 					class="heart1"
 					style={heart1IsInView
 						? `transform: translateY(${(scrollY - heart1InitialScrollY) * -0.01}px) rotate(${Math.min(0, -90 + (scrollY - heart1InitialScrollY) * 0.1)}deg);`
-						: ''}
-				>
-					<img src={v_sydan} />
+						: ''}>
+					<img src={v_sydan} alt="sydämen vasen puolikas" />
 				</div>
 				<div
 					bind:this={heart2Element}
 					class="heart2"
 					style={heart2IsInView
 						? `transform: translateY(${(scrollY - heart2InitialScrollY) * -0.01}px) rotate(${Math.max(0, 90 + (scrollY - heart2InitialScrollY) * -0.1)}deg);`
-						: ''}
-				>
-					<img src={o_sydan} />
+						: ''}>
+					<img src={o_sydan} alt="sydämen oikea puolikas" />
 				</div>
-				<div class="background"><img src={nettisivu_k1} /></div>
+				<div class="background"><img src={nettisivu_k1} alt="tausta" /></div>
 				<div
 					bind:this={zombieElement}
 					class="zombie"
 					style={zombieIsInView
 						? `transform: translateX(${(scrollY - zombieInitialScrollY) * 0.1}px);`
-						: ''}
-				>
-					<img src={zombie} />
+						: ''}>
+					<img src={zombie} alt="zombie" />
 				</div>
 				<p>
-					Matkalla vaaroja ja zomrizoja kuhiseva lihaviidakko koettelee luottamusta ystäviin,
-					rakkauteen ja tuttuihin tapoihin. Onneksi mukana on yksi henkisen tuen humanisti. Eikä
-					koskaan ole liian myöhäistä oppia rakastamaan oikein.
+					Matkalla vaaroja ja zomrizoja kuhiseva lihaviidakko koettelee luottamusta
+					ystäviin, rakkauteen ja tuttuihin tapoihin. Onneksi mukana on yksi henkisen tuen
+					humanisti. Eikä koskaan ole liian myöhäistä oppia rakastamaan oikein.
 				</p>
 			</div>
 			<div class="third-panel panel">
-				<div class="verho1"><img src={verho1} /></div>
+				<div class="verho1"><img src={verho1} alt="verho1" /></div>
 				<div
 					bind:this={curtainElement}
 					class="verho2"
 					style={curtainIsInView
 						? `transform: translateX(${(scrollY - curtainInitialScrollY) * 0.1}px);`
-						: ''}
-				>
-					<img src={verho2} />
+						: ''}>
+					<img src={verho2} alt="verho2" />
 				</div>
-				<div class="verho3"><img src={verho3} /></div>
+				<div class="verho3"><img src={verho3} alt="verho3" /></div>
 			</div>
 		</div>
 	</div>
@@ -247,8 +241,11 @@
 					To 28.3.2024 19:00<br />
 					Pe 29.3.2024 17:00<br />
 					Kaikki esitykset
-					<a class="link" href="https://www.karen.fi/" target="_blank" style="z-index = 1000;"
-						>Kårenilla</a
+					<a
+						class="link"
+						href="https://www.karen.fi/"
+						target="_blank"
+						style="z-index = 1000;">Kårenilla</a
 					><br />
 				</p>
 			</div>
@@ -257,37 +254,24 @@
 				class="tatu"
 				style={tatuIsInView
 					? `transform: translateX(${(scrollY - tatuInitialScrollY) * -0.1}px) rotate(${tatuInitialRotation + (scrollY - tatuInitialScrollY) * 0.008}deg)`
-					: ''}
-			>
+					: ''}>
 				<img src={tatu} alt="tatu" />
 			</div>
 		</div>
-		<a class="btn" href="https://kide.app/community/d96376eb-02ff-4b1b-be75-a959f0fe0c42">Osta lippuja</a>
 		<div class="video-container">
 			<Video
 				videoURL="https://www.youtube.com/embed/mjmnFollhrw?si=IV8Sa0Th5kySAit3"
-				code="mjmnFollhrw"
-			/>
+				code="mjmnFollhrw" />
 		</div>
-<!-- 		<div class="video-container">		
-			<Video
-				videoURL="https://www.youtube.com/embed/HNEc3VD8CR0?si=S7E6G81sXkm09Uqx"
-				code="S7E6G81sXkm09Uqx"
-			/>
-		</div> -->
-
 	</div>
-  
-	<Sponsors {data} />
+
+	<Sponsors sponsors={data.sponsors} />
 	<div class="wrap"><Quizz id={quizz_id} /></div>
-	
 </div>
 
 <style lang="scss">
-	@use '../../style/variables' as v;
-
 	.comic {
-		width: 100%;
+		width: 100vw;
 		max-width: 1000px;
 		overflow: hidden;
 
@@ -373,11 +357,11 @@
 			opacity: 0;
 			transition: opacity 0.2s;
 			transition-delay: 0.5s;
-			background-image: url('$lib/images/kevatpaivanseisaus/kapow.png');
+			background-image: url('$lib/images/kevatpaivanseisaus/kapow.avif');
 			background-repeat: no-repeat;
 			background-size: 100% 100%;
 			background-position: center;
-			color: v.$black;
+			color: var(--black-hex);
 			font-weight: 600;
 			font-size: 20px;
 			padding: 150px;
@@ -429,7 +413,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background-image: url('$lib/images/kevatpaivanseisaus/nettisivu_tausta.png');
+		background-image: url('$lib/images/kevatpaivanseisaus/nettisivu_tausta.webp');
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
 	}
@@ -438,7 +422,7 @@
 		padding-top: 70px;
 		height: 100vh;
 		overflow: hidden;
-		background-image: url('$lib/images/kevatpaivanseisaus/nettisivu_tausta.png');
+		background-image: url('$lib/images/kevatpaivanseisaus/nettisivu_tausta.webp');
 		z-index: 1;
 	}
 	.image {
@@ -470,7 +454,7 @@
 
 	@font-face {
 		font-family: 'Beon';
-		src: url('$lib/fonts/BeonMedium-6d51.otf') format('truetype');
+		src: url('$lib/fonts/BeonMedium-6d51-webfont.woff2') format('woff2');
 	}
 
 	.u-turn {
@@ -527,10 +511,13 @@
 	}
 
 	.page-wrapper {
-		background-image: url('$lib/images/kevatpaivanseisaus/nettisivu_tausta.png');
+		background-image: url('$lib/images/kevatpaivanseisaus/nettisivu_tausta.webp');
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
 		background-position: top center;
+		max-width: 100%;
+		width: 100%;
+		overflow: hidden;
 		position: relative;
 	}
 

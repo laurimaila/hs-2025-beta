@@ -1,61 +1,63 @@
-<script>
-	import '../../style/app.scss';
-	import { page } from '$app/stores';
-	import logo from '$lib/images/logo_white.png';
-	let address = $page.data.address;
-	let pages = $page.data.nodes;
+<script lang="ts">
+	import type { ContactItem, NavigationItem } from '$lib/types/content'
+	import ContactsList from '$lib/components/ContactsList.svelte'
+	import '$styles/app.scss'
+	import { page } from '$app/stores'
+	import logo from '$lib/images/logo_white.avif'
+	let contacts: ContactItem = $page.data.address
+	let navigations: NavigationItem[] = $page.data.nodes
 </script>
 
-<section class="wrap">
-	<div class="footer-top">
-		<div class="pages">
-			<h2>Sivut</h2>
-			<ul>
-				{#each pages as item (item.id)}
-					<li><a href={item.path}>{item.label}</a></li>
-				{/each}
-			</ul>
+<section>
+	<div class="wrap">
+		<div class="footer-top">
+			<div class="pages">
+				<h2>Sivut</h2>
+				<ul>
+					{#each navigations as item (item.id)}
+						<li><a href={item.href}>{item.title}</a></li>
+					{/each}
+				</ul>
+			</div>
+			<div class="address">
+				<h2>Yhteystiedot</h2>
+				<ContactsList {contacts} />
+			</div>
+			<div class="socials">
+				<h2>Tärkeät linkit</h2>
+				<ul>
+					<li><a href="/kalenteri">Kalenteri</a></li>
+					<li><a href="/laulukirja">Laulukirja</a></li>
+				</ul>
+			</div>
 		</div>
-		<div class="address">
-			<h2>Osoite</h2>
-			<p><strong>Sähköposti: </strong>{address?.sahkopossti}</p>
-			<p><strong>Y-tunnus: </strong>{address?.yTunnus}</p>
-			<p><strong>Tilinumero: </strong>{address?.tilinnumero}</p>
-			<p><strong>Osoite: </strong>{address?.osoite}</p>
-		</div>
-		<div class="socials">
-			<h2>Tärkeät linkit</h2>
-			<ul>
-				<li><a href="/kalenteri">Kalenteri</a></li>
-				<li><a href="/laulukirja">Laulukirja</a></li>
-			</ul>
-		</div>
-	</div>
-	<div class="footer-bottom">
-		<div class="logo"><a href="/"><img src={logo} alt="HybridiSpeksi logo" /></a></div>
-		<div class="links">
-			<ul>
-				<li><a href="/hybridispeksi-ry-yhdistyksen-saannot">Yhdistyksen säännöt</a></li>
-				<li><a href="/hybridispeksi-ryn-merkkiohjesaanto">Yhdistyksen merkkiohjesääntö</a></li>
-				<li><a href="/rekisteriseloste">Rekisteriseloste</a></li>
-			</ul>
+		<div class="footer-bottom">
+			<div class="logo"><a href="/"><img src={logo} alt="HybridiSpeksi logo" /></a></div>
+			<div class="links">
+				<ul>
+					<li><a href="/hybridispeksi-ry-yhdistyksen-saannot">Yhdistyksen säännöt</a></li>
+					<li>
+						<a href="/hybridispeksi-ryn-merkkiohjesaanto"
+							>Yhdistyksen merkkiohjesääntö</a>
+					</li>
+					<li><a href="/rekisteriseloste">Rekisteriseloste</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </section>
 
 <style lang="scss">
-	@use '../../style/variables' as v;
-
 	section {
-		padding-top: 50px;
-		padding-bottom: 10px;
-		background-color: v.$black;
-		color: v.$white;
+		padding-top: 2rem;
+		padding-bottom: 0.5rem;
+		background-color: var(--black-hex);
+		color: var(--white-hex);
 		display: flex;
 		flex-direction: column;
 
 		a {
-			color: v.$white;
+			color: var(--white-hex);
 			text-decoration: underline;
 		}
 		li {
@@ -71,9 +73,9 @@
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
+		gap: 2rem;
 		div {
-			width: calc(33.33% - 50px);
-			padding: 0 25px 0 0;
+			flex: 1 1 calc(33.33% - 25px);
 			min-width: 300px;
 		}
 	}
@@ -90,7 +92,7 @@
 				display: flex;
 				flex-wrap: wrap;
 				li {
-					margin: 0 5px
+					margin: 0 5px;
 				}
 			}
 			@media (max-width: 650px) {

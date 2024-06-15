@@ -1,44 +1,33 @@
-<script>
-    export let data;
-    const production = data.production;
+<script lang="ts">
+	import type { Production } from '$lib/types/common'
+	import { page } from '$app/stores'
+	export let data
+
+	$: productionPath = $page.url.pathname
+
+	let productions: Production[] = data.productions || []
+	$: production = productions?.find(
+		(prod) => prod.slug == productionPath.replace('/produktiot/', '')
+	)
+
+	if (!production) {
+		console.error('Production not found')
+	}
 </script>
-<div class="wrap">
-    <div class="nav">
-        <a href="./produktiot">Produktiot</a>
-    </div>
-    <div class="production">
-        <div class="title">
-            <h1>{production.title}</h1>
-        </div>
-        <div class="has-content">
-            <div class="text">
-                {@html production.productionFields.synopsis}
-            </div>
-        </div>
-        <div class="has-images">
-             <div class="image">
-                <img src="{production.productionFields.banner?.node.mediaItemUrl}" alt="{production.productionFields.banner?.node.altText}">
-             </div>   
-        </div>
-    </div>
-</div>
-<style lang="scss">
-    .wrap {
-        padding-top: 70px;
-        .production {
-            .title {
 
-            }
-            .has-content {
+{#if production}
+	<div class="production-details">
+		<h1>{production.title}</h1>
+		{#if production.synopsis}
+			<div class="content">{@html production.synopsis}</div>
+		{/if}
+	</div>
+{:else}
+	<p>Loading...</p>
+{/if}
 
-            }
-            .has-images {
-                .image {
-                    img {
-                        width: 100%;
-                    }
-                }
-            }
-        }
-    }
+<style>
+	.production-details {
+		padding: 2rem;
+	}
 </style>

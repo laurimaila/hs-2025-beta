@@ -1,63 +1,43 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import type { Sponsor } from '$lib/types/common'
 
-	export let data;
-	const sponsors: Sponsors = data.sponsors;
-
-	type Sponsors = Sponsor[];
-	type Sponsor = {
-		name: string,
-		webpage: string,
-		mainsponsor: string,
-		logo: string
-	}
+	export let sponsors: Sponsor[]
 
 	function openLink(url: string) {
-		window.open(url, '_blank');
+		window.open(url, '_blank')
 	}
 
 	function getMainSponsorHeading() {
 		return sponsors.filter((sponsor) => sponsor.mainsponsor).length > 1
 			? 'pääyhteistyökummanit'
-			: 'Pääyhteistyökumppani';
+			: 'Pääyhteistyökumppani'
 	}
 
 	function hasMainSponsors() {
-		return sponsors.some(
-			(sponsor) =>
-				sponsor.logo &&
-				sponsor.logo &&
-				sponsor.mainsponsor
-		);
+		return sponsors.some((sponsor) => sponsor.logoUrl && sponsor.logoUrl && sponsor.mainsponsor)
 	}
 
 	function hasRegularSponsors() {
 		return sponsors.some(
-			(sponsor: Sponsor) =>
-				sponsor.logo &&
-				sponsor.logo &&
-				!sponsor.mainsponsor
-		);
+			(sponsor: Sponsor) => sponsor.logoUrl && !sponsor.mainsponsor
+		)
 	}
 </script>
 
 <div class="all-sponsors-container">
 	{#if hasMainSponsors()}
-		<h2 class="center">{getMainSponsorHeading()}</h2>
+		<h2 class="center main-sponsor-heading">{getMainSponsorHeading()}</h2>
 		<div class="main-sponsors-container sponsors-container">
 			{#each sponsors as sponsor}
-				{#if sponsor.logo && sponsor.logo && sponsor.mainsponsor}
-				<div class="main-sponsor-logo-container"
-					on:click={() => openLink(sponsor.webpage)}
-					on:keydown={() => openLink(sponsor.webpage)}
-					role=button tabindex=0
-				>
-					<img
-						src={sponsor.logo}
-						alt={sponsor.name}
-						class="main-sponsor-logo"
-					/>
-				</div>
+				{#if sponsor.logoUrl && sponsor.mainsponsor}
+					<div
+						class="main-sponsor-logo-container"
+						on:click={() => openLink(sponsor.webpage)}
+						on:keydown={() => openLink(sponsor.webpage)}
+						role="button"
+						tabindex="0">
+						<img src={sponsor.logoUrl} alt={sponsor.name} class="main-sponsor-logo" />
+					</div>
 				{/if}
 			{/each}
 		</div>
@@ -67,18 +47,15 @@
 
 		<div class="regular-sponsors-container sponsors-container">
 			{#each sponsors as sponsor}
-				{#if sponsor.logo && sponsor.logo && !sponsor.mainsponsor}
-				<div class="sponsor-logo-container"
-					on:click={() => openLink(sponsor.webpage)}
-					on:keydown={() => openLink(sponsor.webpage)}
-					role=button tabindex=0
-				>
-					<img
-						src={sponsor.logo}
-						alt={sponsor.name}
-						class="sponsor-logo"
-					/>
-				</div>
+				{#if sponsor.logoUrl && !sponsor.mainsponsor}
+					<div
+						class="sponsor-logo-container"
+						on:click={() => openLink(sponsor.webpage)}
+						on:keydown={() => openLink(sponsor.webpage)}
+						role="button"
+						tabindex="0">
+						<img src={sponsor.logoUrl} alt={sponsor.name} class="sponsor-logo" />
+					</div>
 				{/if}
 			{/each}
 		</div>
@@ -86,14 +63,8 @@
 </div>
 
 <style lang="scss">
-	@use '../../style/variables' as v;
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		color: v.$black;
+	h2 {
+		color: var(--black-hex);
 		margin: 0;
 	}
 	.sponsors-container {
@@ -115,7 +86,7 @@
 		width: 100%;
 		flex-direction: column;
 		align-items: center;
-		background-color: v.$white;
+		background-color: var(--white-hex);
 		padding: 50px 0;
 	}
 	.all-sponsors-container::before {
@@ -125,34 +96,43 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-image: url('../images/logo_black.png');
+		background-image: url('$lib/images/logo_black.avif');
 		background-repeat: no-repeat;
 		background-size: contain;
 		background-position: center center;
 		opacity: 0.05;
 	}
 
+	.main-sponsor-heading {
+		margin-bottom: 25px;
+		align-self: center;
+		@media screen and (max-width: 768px) {
+			padding-right: 6rem;
+		}
+	}
+
 	.sponsor-logo {
 		max-width: 150px;
-		height: auto;
 		padding: 10px;
-		margin: 5px;
-		border: solid transparent 5px;
-		cursor: pointer;
 		&:hover {
-			border: solid black 5px;
+			transform: scale(1.2);
 		}
 	}
 
 	.main-sponsor-logo {
 		max-width: 400px;
 		width: 100%;
-		height: auto;
-		margin: 5px;
-		border: solid transparent 5px;
-		cursor: pointer;
 		&:hover {
-			border: solid black 5px;
+			transform: scale(1.1);
 		}
+	}
+
+	.sponsor-logo,
+	.main-sponsor-logo {
+		height: auto;
+		border: solid transparent 5px;
+		margin: 5px;
+		cursor: pointer;
+		transition: transform 0.3s ease;
 	}
 </style>
