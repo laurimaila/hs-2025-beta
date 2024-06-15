@@ -1,5 +1,5 @@
 <script>
-	import { PUBLIC_WP_REST_API_URL } from '$env/static/public';
+	import { PUBLIC_WP_REST_API_URL, PUBLIC_WP_MEDIA_API_URL } from '$env/static/public';
 	import { onMount } from 'svelte'
 	import { Pie } from 'svelte-chartjs'
 	import 'chart.js/auto'
@@ -19,11 +19,7 @@
 	let selectedAnswers = {}
 	export let id
 
-	async function fetchImageUrl(id) {
-		const response = await fetch(`${PUBLIC_WP_REST_API_URL}/media/${id}`)
-		const data = await response.json()
-		return data.source_url
-	}
+	let isLoading = true;
 
 	onMount(() => {
 		fetch(`https://wp.hybridispeksi.fi/wp-json/ifeelquizzy/v1/data/${id}`)
@@ -38,7 +34,6 @@
 					characters[character.id]['name'] = character.name
 					characters[character.id]['description'] = character.description
 					characters[character.id]['image_id'] = character.image
-					characters[character.id]['image_url'] = await fetchImageUrl(character.image)
 					finalPoints[character.id] = 0
 				}
 				data.questions.forEach((question) => {
@@ -55,8 +50,10 @@
 						maxPoints[key] += tempMaxPoints[key]
 					})
 				})
+				isLoading = false;
 			})
 			.catch((error) => console.error('Error:', error))
+			isLoading = false;
 	})
 
 	async function selectAnswer(answer) {
@@ -165,7 +162,10 @@
 </script>
 
 <div class="container">
-	{#if currentQuestionIndex == -1}
+	{#if isLoading}
+		<p>Ladataan...</p>
+	{/if}
+	{#if !isLoading && currentQuestionIndex == -1}
 		<button on:click={nextQuestion}>Aloita kysely!</button>
 	{/if}
 	{#if data && currentQuestionIndex > -1 && currentQuestionIndex < data.questions.length}
@@ -195,7 +195,7 @@
 				{#each finalPointsArray as [key, value]}
 					<div class="character">
 						<div class="image-container">
-							<img src={characters[key].image_url} alt={characters[key].name} />
+							<img src={`${PUBLIC_WP_MEDIA_API_URL}/${characters[key]['image_id']}`} alt={characters[key].name} />
 						</div>
 						<div class="text">
 							<p class="you-are">

@@ -1,9 +1,9 @@
-import { PUBLIC_WP_REST_API_URL } from '$env/static/public'
+import { WP_REST_API_URL } from '$env/static/private'
 import type { Person } from '$lib/types/common'
 import type { ApiPersonResponse } from '$lib/types/wp-api'
 
 export const load = async ({ fetch }) => {
-	const response = await fetch(`${PUBLIC_WP_REST_API_URL}/people?per_page=100`)
+	const response = await fetch(`${WP_REST_API_URL}/people?per_page=100`)
 
 	if (!response.ok) {
 		console.error('Error fetching people')

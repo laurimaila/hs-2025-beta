@@ -1,4 +1,4 @@
-import { PUBLIC_WP_REST_API_URL } from '$env/static/public';
+import { WP_REST_API_URL } from '$env/static/private';
 import { error } from '@sveltejs/kit'
 import type { SinglePageContent } from '$lib/types/content'
 
@@ -9,7 +9,7 @@ export const load = async ({ params, fetch }) => {
 	let res: Response
 	try {
 		res = await fetch(
-			`${PUBLIC_WP_REST_API_URL}/pages?slug=${slug}&acf_format=standard`
+			`${WP_REST_API_URL}/pages?slug=${slug}&acf_format=standard`
 		)
 	} catch (e) {
 		console.error('Error fetching page by slug:', e instanceof Error ? e.message : '')

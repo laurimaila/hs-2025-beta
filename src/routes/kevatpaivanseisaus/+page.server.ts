@@ -1,10 +1,10 @@
-import { PUBLIC_WP_REST_API_URL, PUBLIC_WP_MEDIA_API_URL } from '$env/static/public'
+import { WP_REST_API_URL, WP_MEDIA_API_URL } from '$env/static/private'
 
 import type { Sponsor } from '$lib/types/common'
 import type { ApiSponsorResponse } from '$lib/types/wp-api'
 
 export const load = async ({ fetch }) => {
-	const res = await fetch(`${PUBLIC_WP_REST_API_URL}/sponsor?per_page=50`)
+	const res = await fetch(`${WP_REST_API_URL}/sponsor?per_page=50`)
 
 	if (res.ok) {
 		try {
@@ -15,7 +15,7 @@ export const load = async ({ fetch }) => {
 					id: item.id,
 					name: item.acf.name,
 					webpage: item.acf.webpage,
-					logoUrl: `${PUBLIC_WP_MEDIA_API_URL}/${item.acf.logo}`,
+					logoUrl: `${WP_MEDIA_API_URL}/${item.acf.logo}`,
 					mainsponsor: item.acf.mainsponsor
 				})
 			)
