@@ -1,3 +1,5 @@
+export const prerender = true;
+
 import { WP_REST_API_URL } from '$env/static/private'
 import type { Person } from '$lib/types/common'
 import type { ApiPersonResponse } from '$lib/types/wp-api'

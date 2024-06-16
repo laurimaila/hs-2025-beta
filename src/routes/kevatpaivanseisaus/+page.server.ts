@@ -1,3 +1,5 @@
+export const prerender = true;
+
 import { WP_REST_API_URL, WP_MEDIA_API_URL } from '$env/static/private'
 
 import type { Sponsor } from '$lib/types/common'

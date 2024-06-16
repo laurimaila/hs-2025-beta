@@ -1,23 +1,23 @@
 <script>
 	import { PUBLIC_WP_REST_API_URL, PUBLIC_WP_MEDIA_API_URL } from '$env/static/public';
-	import { onMount } from 'svelte'
-	import { Pie } from 'svelte-chartjs'
-	import 'chart.js/auto'
+	import { onMount } from 'svelte';
+	import { Pie } from 'svelte-chartjs';
+	import 'chart.js/auto';
 
-	let data = null
-	let currentQuestionIndex = -1
-	let points = {}
-	let maxPoints = {}
-	let characters = {}
-	let finalPoints = {}
-	let total = 0
-	let finalTotal = 0
-	let pieData
-	let finalPointsArray
-	let sortedFinalPoints = []
-	let sortedFinalCharacters = []
-	let selectedAnswers = {}
-	export let id
+	let data = null;
+	let currentQuestionIndex = -1;
+	let points = {};
+	let maxPoints = {};
+	let characters = {};
+	let finalPoints = {};
+	let total = 0;
+	let finalTotal = 0;
+	let pieData;
+	let finalPointsArray;
+	let sortedFinalPoints = [];
+	let sortedFinalCharacters = [];
+	let selectedAnswers = {};
+	export let id;
 
 	let isLoading = true;
 
@@ -25,82 +25,82 @@
 		fetch(`https://wp.hybridispeksi.fi/wp-json/ifeelquizzy/v1/data/${id}`)
 			.then((response) => response.json())
 			.then(async (json) => {
-				data = json
+				data = json;
 				// Initialize points object with characters
 				for (const character of data.characters) {
-					points[character.id] = 0
-					maxPoints[character.id] = 0
-					characters[character.id] = {}
-					characters[character.id]['name'] = character.name
-					characters[character.id]['description'] = character.description
-					characters[character.id]['image_id'] = character.image
-					finalPoints[character.id] = 0
+					points[character.id] = 0;
+					maxPoints[character.id] = 0;
+					characters[character.id] = {};
+					characters[character.id]['name'] = character.name;
+					characters[character.id]['description'] = character.description;
+					characters[character.id]['image_id'] = character.image;
+					finalPoints[character.id] = 0;
 				}
 				data.questions.forEach((question) => {
-					let tempMaxPoints = {}
+					let tempMaxPoints = {};
 					question.answers.forEach((answer) => {
 						answer.points.forEach((point) => {
 							tempMaxPoints[point.character_id] =
 								tempMaxPoints[point.character_id] > parseInt(point.points)
 									? tempMaxPoints[point.character_id]
-									: parseInt(point.points)
-						})
-					})
+									: parseInt(point.points);
+						});
+					});
 					Object.keys(tempMaxPoints).forEach((key) => {
-						maxPoints[key] += tempMaxPoints[key]
-					})
-				})
+						maxPoints[key] += tempMaxPoints[key];
+					});
+				});
 				isLoading = false;
 			})
-			.catch((error) => console.error('Error:', error))
-			isLoading = false;
-	})
+			.catch((error) => console.error('Error:', error));
+		isLoading = false;
+	});
 
 	async function selectAnswer(answer) {
-		selectedAnswers[answer.question_id] = answer
+		selectedAnswers[answer.question_id] = answer;
 
-		await new Promise((resolve) => setTimeout(resolve, 500))
+		await new Promise((resolve) => setTimeout(resolve, 500));
 		if (currentQuestionIndex < data.questions.length) {
-			currentQuestionIndex++
+			currentQuestionIndex++;
 		}
 
 		if (currentQuestionIndex === data?.questions.length) {
 			Object.entries(selectedAnswers).forEach((answer) => {
 				answer[1].points.forEach((point) => {
-					points[point.character_id] += parseInt(point.points)
-				})
-			})
+					points[point.character_id] += parseInt(point.points);
+				});
+			});
 
 			Object.keys(points).forEach((key) => {
 				if (maxPoints[key] == 0) {
-					delete finalPoints[key]
-					delete characters[key]
+					delete finalPoints[key];
+					delete characters[key];
 				} else {
-					finalPoints[key] = Math.ceil(points[key] * (points[key] / maxPoints[key]))
-					total += finalPoints[key]
+					finalPoints[key] = Math.ceil(points[key] * (points[key] / maxPoints[key]));
+					total += finalPoints[key];
 				}
-			})
+			});
 
 			Object.keys(finalPoints).forEach((key) => {
 				if (finalPoints[key] / total < 0.1) {
-					delete finalPoints[key]
-					delete characters[key]
+					delete finalPoints[key];
+					delete characters[key];
 				} else {
-					finalTotal += finalPoints[key]
+					finalTotal += finalPoints[key];
 				}
-			})
+			});
 
 			Object.keys(finalPoints).forEach((key) => {
-				finalPoints[key] = (finalPoints[key] / finalTotal) * 100
-			})
+				finalPoints[key] = (finalPoints[key] / finalTotal) * 100;
+			});
 
-			finalPointsArray = Object.entries(finalPoints)
-			finalPointsArray.sort((a, b) => b[1] - a[1])
+			finalPointsArray = Object.entries(finalPoints);
+			finalPointsArray.sort((a, b) => b[1] - a[1]);
 
 			finalPointsArray.forEach((entry) => {
-				sortedFinalPoints.push(entry[1])
-				sortedFinalCharacters.push(characters[entry[0]].name)
-			})
+				sortedFinalPoints.push(entry[1]);
+				sortedFinalCharacters.push(characters[entry[0]].name);
+			});
 
 			pieData = {
 				labels: sortedFinalCharacters,
@@ -144,19 +144,19 @@
 						borderWidth: 1
 					}
 				]
-			}
+			};
 		}
 	}
 
 	function nextQuestion() {
 		if (currentQuestionIndex < data.questions.length - 1) {
-			currentQuestionIndex++
+			currentQuestionIndex++;
 		}
 	}
 
 	function previousQuestion() {
 		if (currentQuestionIndex > 0) {
-			currentQuestionIndex--
+			currentQuestionIndex--;
 		}
 	}
 </script>
@@ -195,7 +195,9 @@
 				{#each finalPointsArray as [key, value]}
 					<div class="character">
 						<div class="image-container">
-							<img src={`${PUBLIC_WP_MEDIA_API_URL}/${characters[key]['image_id']}`} alt={characters[key].name} />
+							<img
+								src={`${PUBLIC_WP_MEDIA_API_URL}/${characters[key]['image_id']}`}
+								alt={characters[key].name} />
 						</div>
 						<div class="text">
 							<p class="you-are">

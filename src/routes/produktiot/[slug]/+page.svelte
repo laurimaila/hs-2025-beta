@@ -1,17 +1,17 @@
 <script lang="ts">
-	import type { Production } from '$lib/types/common'
-	import { page } from '$app/stores'
-	export let data
+	import type { Production } from '$lib/types/common';
+	import { page } from '$app/stores';
+	export let data;
 
-	$: productionPath = $page.url.pathname
+	$: productionPath = $page.url.pathname;
 
-	let productions: Production[] = data.productions || []
+	let productions: Production[] = data.productions || [];
 	$: production = productions?.find(
 		(prod) => prod.slug == productionPath.replace('/produktiot/', '')
-	)
+	);
 
 	if (!production) {
-		console.error('Production not found')
+		console.error('Production not found');
 	}
 </script>
 

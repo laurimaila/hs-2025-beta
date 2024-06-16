@@ -1,15 +1,17 @@
 <script lang="ts">
-	import Navbar from '$lib/components/Navigation/Navbar.svelte'
-	import Footer from '$lib/components/Footer.svelte'
-	import { page } from '$app/stores'
-	import '$styles/app.scss'
+	import Navbar from '$lib/components/Navigation/Navbar.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import { page } from '$app/stores';
+	import '$styles/app.scss';
 </script>
 
 <svelte:head>
+	<meta charset="UTF-8" />
+	<meta name="description" content="HybridiSpeksi website" />
+	<meta name="keywords" content="HybridiSpeksi, Speksi, Teatteri, Opiskelija, UTU, University of Turku">
 	<title
-		>{$page.data?.page?.title
-			? 'Hybridispeksi - ' + $page.data.page.title
-			: 'Hybridispeksi'}</title>
+		>{$page.data?.page?.title ? 'Hybridispeksi - ' + $page.data.page.title : 'Hybridispeksi'}
+	</title>
 </svelte:head>
 
 <Navbar />

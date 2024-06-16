@@ -11,6 +11,8 @@ Here you can find instructions on setting up the development environment, buildi
 
 - Add GitHub Actions workflow which runs tests and handles deployment
 
+- Make the application PWA for easier mobile and offline access
+
 - ???
 
 ## Ohje

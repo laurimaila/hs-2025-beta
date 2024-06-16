@@ -326,7 +326,7 @@
 						font-size: 16px;
 					}
 					@media (max-width: 500px) {
-						font-size: 11px;
+						font-size: 12px;
 					}
 				}
 			}
@@ -455,6 +455,7 @@
 	@font-face {
 		font-family: 'Beon';
 		src: url('$lib/fonts/BeonMedium-6d51-webfont.woff2') format('woff2');
+		font-display: swap;
 	}
 
 	.u-turn {

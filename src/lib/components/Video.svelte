@@ -1,28 +1,28 @@
 <script>
-	import { onMount } from 'svelte'
-	export let videoURL = ''
-	export let code = ''
-	let lightboxOpen = false
+	import { onMount } from 'svelte';
+	export let videoURL = '';
+	export let code = '';
+	let lightboxOpen = false;
 
 	function openLightbox() {
-		lightboxOpen = true
+		lightboxOpen = true;
 	}
 
 	function closeLightbox() {
-		lightboxOpen = false
+		lightboxOpen = false;
 	}
 
 	onMount(() => {
 		window.addEventListener('keydown', (e) => {
 			if (e.key === 'Escape') {
-				closeLightbox()
+				closeLightbox();
 			}
-		})
-	})
+		});
+	});
 </script>
 
 <button on:click={openLightbox}
-	><img src="http://i.ytimg.com/vi/{code}/maxresdefault.jpg" alt="youtube thumbnail" />
+	><img src="https://i.ytimg.com/vi/{code}/maxresdefault.jpg" alt="youtube thumbnail" />
 	<div class="play-mark"></div></button>
 
 {#if lightboxOpen}
