@@ -7,13 +7,12 @@ import type { SinglePageContent } from '$lib/types/content';
 function getSlug(href: string): string | undefined {
 	const segments = new URL(href).pathname.split('/');
 	const last = segments.pop() || segments.pop();
-	return last
+	return last;
 }
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ url, fetch }) => {
 	const slug = getSlug(url.href);
-	console.error('url:', slug);
 
 	let res: Response;
 	try {
@@ -30,9 +29,9 @@ export const load = async ({ url, fetch }) => {
 	const pageData = data.length > 0 ? data[0] : null;
 
 	const returnPageData: SinglePageContent = {
-		title: pageData.title?.rendered,
-		contentHTML: pageData.content.rendered,
-		bannerUrl: pageData.acf.banner_image
+		title: pageData?.title.rendered,
+		contentHTML: pageData?.content.rendered,
+		bannerUrl: pageData?.acf.banner_image
 	};
 
 	return returnPageData;

@@ -13,6 +13,8 @@ Here you can find instructions on setting up the development environment, buildi
 
 - Make the application PWA for easier mobile and offline access
 
+- Migrate CMS to self-hosted Directus
+
 - ???
 
 ## Ohje

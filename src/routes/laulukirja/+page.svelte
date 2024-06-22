@@ -70,8 +70,8 @@
 		isAutoScrollEnabled = !isAutoScrollEnabled;
 		if (isAutoScrollEnabled) {
 			scrollInterval = setInterval(() => {
-				window.scrollBy(0, 5);
-			}, 500); // Scroll 3 vertical pixels every 300ms
+				window.scrollBy(0, 1);
+			}, 100); // Scroll 3 vertical pixels every 300ms
 		} else {
 			clearInterval(scrollInterval);
 		}
@@ -289,7 +289,7 @@
 		right: 20px;
 		user-select: none;
 		cursor: pointer;
-		bottom: 20px;
+		bottom: 100px;
 		background-color: #4b62e4;
 		border: none;
 		border-radius: 10%;
@@ -313,10 +313,10 @@
 			visibility 0.5s;
 		position: fixed;
 		z-index: 99;
-		left: 10%;
+		right: 20px;
 		user-select: none;
 		cursor: pointer;
-		bottom: 3rem;
+		bottom: 20px;
 		background-color: #4b62e4;
 		border: none;
 		border-radius: 10%;

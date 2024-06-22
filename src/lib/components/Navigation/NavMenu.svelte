@@ -19,7 +19,7 @@
 		<ul class="link-flex">
 			{#each menuItems as item (item.id)}
 				<li class="link-item">
-					<a on:click={linkToggleSidebar} href={item.href}>{item.title}</a>
+					<a on:click={linkToggleSidebar} href={item.link}>{item.title}</a>
 				</li>
 			{/each}
 		</ul>

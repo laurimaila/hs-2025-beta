@@ -15,7 +15,7 @@
 				<h2>Sivut</h2>
 				<ul>
 					{#each navigations as item (item.id)}
-						<li><a href={item.href}>{item.title}</a></li>
+						<li><a href={item.link}>{item.title}</a></li>
 					{/each}
 				</ul>
 			</div>
