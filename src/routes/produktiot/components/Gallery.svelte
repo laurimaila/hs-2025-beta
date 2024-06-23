@@ -29,7 +29,7 @@
 		bp.open({
 			items: imageLinks,
 			el: e.currentTarget,
-			maxZoom: 2
+			maxZoom: 4
 		});
 	}
 
@@ -60,21 +60,33 @@
 		display: grid;
 		width: 100%;
 		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		padding: 1.25rem;
-		padding-bottom: 2.5rem;
+		gap: 0;
+		margin: 0;
+		padding: 1.25rem 1.25rem 2.5rem 1.25rem;
+		@media only screen and (max-width: 768px) {
+			grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+		}
+		@media only screen and (max-width: 480px) {
+			grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+		}
 	}
 
 	.image-link {
 		display: block;
 		height: 200px;
 		width: 100%;
+		padding: 0;
+		margin: 0;
 		box-shadow:
 			0 10px 15px -3px rgba(0, 0, 0, 0.1),
 			0 4px 6px -2px rgba(0, 0, 0, 0.05);
+		@media only screen and (max-width: 768px) {
+			height: 180px;
+		}
 	}
 
 	.image {
-		width: 100%;
+		width: 100% !important;
 		height: 100%;
 		object-fit: cover;
 	}

@@ -1,14 +1,21 @@
-<script>
-	import { getAssetUrl } from '$lib/utils/directus';
-	export let src;
-	export let alt;
-
+<script lang="ts">
 	import { onMount } from 'svelte';
+	import { getAssetUrl } from '$lib/utils/directus';
+
+	export let src: string;
+	export let alt: string;
 
 	let loaded = false;
 	let thisImage;
+	let imageSrc: string;
 
 	onMount(() => {
+		const screenWidth = window.innerWidth;
+		imageSrc =
+			screenWidth < 768
+				? getAssetUrl(src, '?width=400&format=auto')
+				: getAssetUrl(src, '?width=768&format=auto');
+
 		thisImage.onload = () => {
 			loaded = true;
 		};
@@ -20,7 +27,7 @@
 </script>
 
 <img
-	src={getAssetUrl(src) + '?width=1080&format=avif'}
+	src={imageSrc}
 	{alt}
 	loading="lazy"
 	class:loaded
@@ -31,7 +38,7 @@
 	img {
 		width: 200px;
 		opacity: 0;
-		transition: opacity 1200ms ease-out;
+		transition: opacity 1000ms ease-out;
 		pointer-events: none;
 		&.loaded {
 			opacity: 1;

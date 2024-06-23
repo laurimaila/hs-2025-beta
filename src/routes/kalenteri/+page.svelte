@@ -44,7 +44,7 @@
 		align-self: center;
 		background-color: #e3e9ff;
 		padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-		border-radius: 10px;
+		border-radius: 5px;
 		margin: 0 auto;
 		@media (max-width: 768px) {
 			height: 27.5rem;

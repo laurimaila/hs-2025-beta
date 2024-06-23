@@ -2,20 +2,14 @@
 	import Gallery from './Gallery.svelte';
 	import type { Production } from '$lib/types/production.d.ts';
 	import Image from './Image.svelte';
-	import { slide } from 'svelte/transition';
 
 	export let speksi: Production;
-
-	let year = speksi?.year;
 </script>
 
-{#if year}
-	<div
-		class="container"
-		style="--bg1: {speksi.color1}; --bg2: {speksi.color2}"
-		transition:slide={{ duration: 1000 }}>
+{#if speksi}
+	<div class="container" style="--bg1: {speksi.color1}; --bg2: {speksi.color2}">
 		<div class="speksi" style="--bg1: {speksi.color1}; --bg2: {speksi.color2}">
-			<Image src={speksi.banner} alt="" />
+			<Image src={speksi.banner} alt="Speksin banneri" />
 			<h2>{speksi.title}</h2>
 			<ul class="stats">
 				{#if speksi.statistics}
@@ -55,7 +49,8 @@
 		justify-content: center;
 		align-items: center;
 		background-image: linear-gradient(to right, var(--bg1), var(--bg2), var(--bg1));
-		@media only screen and (max-width: 850px) {
+		@media only screen and (max-width: 768px) {
+			max-width: 100%;
 			background-image: none;
 			border-radius: 0;
 			padding-left: 0;
@@ -67,7 +62,7 @@
 			max-width: 90%;
 			color: black;
 			text-align: center;
-			background-color: white;
+			background-color: #fdfdfd;
 			margin: 5rem auto;
 			border-radius: 10px;
 			> :global(img) {
@@ -78,7 +73,7 @@
 				}
 			}
 			@media only screen and (max-width: 850px) {
-				max-width: 100vw;
+				max-width: 100%;
 				font-size: 1rem;
 				width: 100%;
 				margin: 0;
@@ -106,7 +101,7 @@
 				flex-wrap: wrap;
 				justify-content: center;
 				max-width: 90%;
-				@media only screen and (max-width: 850px) {
+				@media only screen and (max-width: 768px) {
 					flex-direction: column;
 					align-items: center;
 				}
@@ -152,8 +147,6 @@
 				flex-direction: row;
 				flex-wrap: wrap;
 				justify-content: center;
-				@media only screen and (max-width: 500px) {
-				}
 				@media (max-width: 400px) {
 					:global(img) {
 						width: 150px;
