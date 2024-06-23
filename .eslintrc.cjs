@@ -13,6 +13,10 @@ module.exports = {
 		ecmaVersion: 2020,
 		extraFileExtensions: ['.svelte']
 	},
+	rules: {
+		"svelte/no-at-html-tags": "off",
+		"no-undef": "off"
+	},
 	env: {
 		browser: true,
 		es2017: true,

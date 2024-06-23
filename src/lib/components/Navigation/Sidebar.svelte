@@ -3,7 +3,7 @@
 	import { sidebarVisible } from './stores'
 
 	// Subscribe to the sidebar store
-	let showSidebar: Boolean
+	let showSidebar: boolean
 	sidebarVisible.subscribe((value) => {
 		showSidebar = value
 	})

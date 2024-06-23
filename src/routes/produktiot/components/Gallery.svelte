@@ -2,14 +2,15 @@
 	import { onMount } from 'svelte';
 	import { getAssetUrl } from '$lib/utils/directus';
 	import type { GalleryImage } from '$lib/types/production.d.ts';
+	import type { BiggerPictureInstance } from 'bigger-picture';
 	import BiggerPicture from 'bigger-picture';
 	import './bigger-picture.css';
 
 	export let images: GalleryImage[] = [];
 	export let id: number;
 
-	let bp;
-	let imageLinks;
+	let bp: BiggerPictureInstance;
+	let imageLinks: NodeListOf<HTMLAnchorElement>;
 
 	const setupGallery = () => {
 		bp = BiggerPicture({
@@ -17,25 +18,25 @@
 		});
 
 		// Bigger Picture - grab image links
-		const testi = `#gallery_${id} > a`;
-		imageLinks = document.querySelectorAll(testi);
+		const label = `#gallery_${id} > a`;
+		imageLinks = document.querySelectorAll(label);
 		imageLinks.forEach((imageLink) => {
 			imageLink.addEventListener('click', openGallery);
 		});
 	};
 
-	function openGallery(e) {
-		e.preventDefault();
-		bp.open({
-			items: imageLinks,
-			el: e.currentTarget,
-			maxZoom: 4
-		});
-	}
-
 	onMount(() => {
 		setupGallery();
 	});
+
+	function openGallery(e: MouseEvent) {
+		e.preventDefault();
+		bp.open({
+			items: imageLinks,
+			el: e.currentTarget ? e.currentTarget : undefined,
+			maxZoom: 4
+		});
+	}
 </script>
 
 <div id="gallery_{id}" class="container">

@@ -1,5 +1,4 @@
 <script lang="js">
-	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import nettisivu_k1 from '$lib/images/kevatpaivanseisaus/nettisivu_k1.png';
 	import nettisivu_k2 from '$lib/images/kevatpaivanseisaus/nettisivu_k2.png';

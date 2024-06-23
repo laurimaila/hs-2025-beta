@@ -44,5 +44,8 @@
 		"bigger-picture": "^1.1.17",
 		"chart.js": "^4.4.2",
 		"svelte-chartjs": "^3.1.5"
+	},
+	"engines": {
+		"node": ">=20"
 	}
 }
