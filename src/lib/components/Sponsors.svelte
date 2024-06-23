@@ -36,7 +36,7 @@
 						on:keydown={() => openLink(sponsor.webpage)}
 						role="button"
 						tabindex="0">
-						<img src={sponsor.logoUrl} alt={sponsor.name} class="main-sponsor-logo" />
+						<img src={sponsor.logoUrl} alt={sponsor.name} class="main-sponsor-logo" loading="lazy" />
 					</div>
 				{/if}
 			{/each}
@@ -54,7 +54,7 @@
 						on:keydown={() => openLink(sponsor.webpage)}
 						role="button"
 						tabindex="0">
-						<img src={sponsor.logoUrl} alt={sponsor.name} class="sponsor-logo" />
+						<img src={sponsor.logoUrl} alt={sponsor.name} class="sponsor-logo" loading="lazy" />
 					</div>
 				{/if}
 			{/each}

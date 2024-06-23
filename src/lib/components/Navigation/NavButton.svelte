@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { sidebarVisible, toggleSidebar } from './stores'
 
-	let sidebarShown: Boolean
+	let sidebarShown: boolean
 	// Subscribe to the store
 	sidebarVisible.subscribe((value) => {
 		sidebarShown = value

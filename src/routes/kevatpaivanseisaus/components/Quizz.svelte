@@ -1,5 +1,5 @@
 <script>
-	import { PUBLIC_WP_REST_API_URL, PUBLIC_WP_MEDIA_API_URL } from '$env/static/public';
+	import { PUBLIC_WP_MEDIA_API_URL } from '$env/static/public';
 	import { onMount } from 'svelte';
 	import { Pie } from 'svelte-chartjs';
 	import 'chart.js/auto';

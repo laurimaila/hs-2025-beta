@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Gallery from './Gallery.svelte';
 	import type { Production } from '$lib/types/production.d.ts';
-	import Image from './Image.svelte';
+	import Banner from './Banner.svelte';
 
 	export let speksi: Production;
 </script>
@@ -9,7 +9,8 @@
 {#if speksi}
 	<div class="container" style="--bg1: {speksi.color1}; --bg2: {speksi.color2}">
 		<div class="speksi" style="--bg1: {speksi.color1}; --bg2: {speksi.color2}">
-			<Image src={speksi.banner} alt="Speksin banneri" />
+			<Banner src={speksi.banner} alt="Speksin banneri" />
+
 			<h2>{speksi.title}</h2>
 			<ul class="stats">
 				{#if speksi.statistics}

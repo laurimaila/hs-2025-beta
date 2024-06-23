@@ -1,5 +1,7 @@
 <script lang="ts">
-	export let filters = {
+	import type { SongFilter } from '$lib/types/songbook';
+
+	export let filters: SongFilter = {
 		year: 2014,
 		production: '',
 		type: '',
@@ -31,10 +33,10 @@
 			filters.year = 2014;
 		}}>Meidän speksi
 	</button>
-	
-	<div>	
+
+	<div>
 	{#each years as year}
-		<button 
+		<button
 			class="{year == filters.year ? 'active' : ''}"
 			on:click={() => {
 				filters.year = year;
@@ -57,7 +59,7 @@
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
-		
+
 		}
 	}
 	button {

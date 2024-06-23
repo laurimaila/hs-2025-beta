@@ -5,8 +5,6 @@
 	export let src: string;
 	export let alt: string;
 
-	let loaded = false;
-	let thisImage;
 	let imageSrc: string;
 
 	onMount(() => {
@@ -14,11 +12,7 @@
 		imageSrc =
 			screenWidth < 768
 				? getAssetUrl(src, '?width=400&format=auto')
-				: getAssetUrl(src, '?width=768&format=auto');
-
-		thisImage.onload = () => {
-			loaded = true;
-		};
+				: getAssetUrl(src, '?width=1080&format=auto');
 	});
 
 	function getDefault() {
@@ -26,22 +20,11 @@
 	}
 </script>
 
-<img
-	src={imageSrc}
-	{alt}
-	loading="lazy"
-	class:loaded
-	bind:this={thisImage}
-	on:error={() => getDefault()} />
+<img src={imageSrc} {alt} loading="lazy" on:error={() => getDefault()} />
 
-<style lang="scss">
+<style>
 	img {
-		width: 200px;
-		opacity: 0;
-		transition: opacity 1000ms ease-out;
+		width: 100%;
 		pointer-events: none;
-		&.loaded {
-			opacity: 1;
-		}
 	}
 </style>

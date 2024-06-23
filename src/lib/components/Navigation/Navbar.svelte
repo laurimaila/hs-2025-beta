@@ -7,7 +7,7 @@
 	import logoWh from '$lib/images/logo_white.avif'
 
 	// Check sidebar visibility from store
-	let sidebarShown: Boolean
+	let sidebarShown: boolean
 	sidebarVisible.subscribe((value) => {
 		sidebarShown = value
 	})

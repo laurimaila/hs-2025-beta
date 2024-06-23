@@ -43,7 +43,7 @@
 		return arr
 	}
 
-	// @ts-ignore
+	// @ts-expect-error - Sorting function breaks TS
 	peopleGroup.sort((a, b) => {
 		if (typeof a.order != 'number' && typeof b.order != 'number') {
 			return removePrefixes(a.title).localeCompare(removePrefixes(b.title))
