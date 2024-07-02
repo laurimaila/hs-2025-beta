@@ -1,15 +1,10 @@
 <script lang="ts">
-	import type { Person } from '$lib/types/common'
+	import type { Person } from '$lib/types/common';
 
-	export let person: Person
-	export let logo
+	export let person: Person;
 </script>
 
 <div class="person">
-	<img
-		class={person.imageUrl ? 'custom-img' : ''}
-		src={person.imageUrl ? person.imageUrl : logo}
-		alt="picture of {person.name}" />
 	<div class="info">
 		<p class="name">{person.name}</p>
 		<p class="job">{person.jobs}</p>
@@ -20,30 +15,25 @@
 	.person {
 		display: flex;
 		flex-direction: column;
-		padding-bottom: 1rem;
+		padding-bottom: 0rem;
 		padding-top: 0rem;
-
-		& img {
-			width: 6rem;
-			margin: 0 auto 1rem auto;
-		}
 
 		& .info {
 			text-align: center;
 
 			& .name {
-				font-size: 1.2rem;
-				margin-bottom: 1rem;
+				font-size: 1.5rem;
+				font-weight: 700;
+				margin-bottom: 0.4rem;
 			}
 
 			& .job {
-				font-weight: 700;
-				font-size: 1.5rem;
-				line-height: 2rem;
-				padding-bottom: 1.25rem;
+				font-size: 1.3rem;
+				line-height: 1.6rem;
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				min-height: 1.5rem;
 			}
 
 			& p {
@@ -55,11 +45,7 @@
 
 	@media (max-width: 768px) {
 		.job {
-			min-height: 3rem !important;
+			min-height: 3rem;
 		}
-	}
-
-	.custom-img {
-		border-radius: 50%;
 	}
 </style>

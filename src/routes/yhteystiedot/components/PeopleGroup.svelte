@@ -1,31 +1,29 @@
 <script lang="ts">
-	import type { Person } from '$lib/types/common'
-	import { getProductionYear } from '$lib/utils/timeUtils'
-	import PersonElement from './PersonElement.svelte'
-	import logoWh from '$lib/images/logo_white.avif'
-	import logoBl from '$lib/images/logo_black.avif'
+	import type { Person } from '$lib/types/common';
+	import { getProductionYear } from '$lib/utils/timeUtils';
+	import PersonElement from './PersonElement.svelte';
 
-	export let peopleGroup: Person[]
-	export let type: string
-	export let index: number
+	export let peopleGroup: Person[];
+	export let type: string;
+	export let index: number;
 
-	let productionYear = getProductionYear()
+	let productionYear = getProductionYear();
 
 	switch (type) {
 		case 'toimihenkilo':
-			type = 'toimihenkilöt'
-			break
+			type = 'toimihenkilöt';
+			break;
 		case 'hallitus':
-			type += ` ${productionYear - 1}–${productionYear}`
-			break
+			type += ` ${productionYear - 1}–${productionYear}`;
+			break;
 		case 'tuotantotiimi':
-			type += ` ${productionYear}`
-			break
+			type += ` ${productionYear}`;
+			break;
 	}
 
 	// Vara- ja apulaishenkilöt aakkostetaan ilman etuliitteitä
 	function removePrefixes(title: string): string {
-		return title.replace(/^(apulais|apu|vara)/i, '')
+		return title.replace(/^(apulais|apu|vara)/i, '');
 	}
 
 	// Järjestää päävastaavan ensin
@@ -35,40 +33,37 @@
 				arr[i - 1].title.toUpperCase().includes(arr[i].title.toUpperCase()) &&
 				arr[i - 1].title != arr[i].title
 			) {
-				let temp = arr[i]
-				arr[i] = arr[i - 1]
-				arr[i - 1] = temp
+				let temp = arr[i];
+				arr[i] = arr[i - 1];
+				arr[i - 1] = temp;
 			}
 		}
-		return arr
+		return arr;
 	}
 
 	// @ts-expect-error - Sorting function breaks TS
 	peopleGroup.sort((a, b) => {
 		if (typeof a.order != 'number' && typeof b.order != 'number') {
-			return removePrefixes(a.title).localeCompare(removePrefixes(b.title))
+			return removePrefixes(a.title).localeCompare(removePrefixes(b.title));
 		} else if (typeof a.order !== 'number') {
-			return 1
+			return 1;
 		} else if (typeof b.order !== 'number') {
-			return -1
+			return -1;
 		} else if (a.order < b.order) {
-			return -1
+			return -1;
 		}
-	})
+	});
 
-	peopleGroup = primaryCorrespondantFirst(peopleGroup)
-
-	let logo: string
-	logo = index % 2 == 0 ? logoWh : logoBl
+	peopleGroup = primaryCorrespondantFirst(peopleGroup);
 </script>
 
 <div class="people index-{index % 2}">
 	<div class="wrap">
 		<h2 class="type">{type}</h2>
-		<div class="flex-row">
+		<div class="people-grid">
 			{#each peopleGroup as person}
 				<div class="person">
-					<PersonElement {person} {logo} />
+					<PersonElement {person} />
 				</div>
 			{/each}
 		</div>
@@ -78,7 +73,7 @@
 <style>
 	.people {
 		padding-top: 0rem;
-		padding-bottom: 1rem;
+		padding-bottom: 2.5rem;
 	}
 
 	.index-0 {
@@ -91,13 +86,14 @@
 		color: var(--black-hex);
 	}
 
-	.flex-row {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: start;
-		flex-direction: row;
+	.people-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+		grid-gap: 3rem 1rem;
+		justify-content: center;
 		@media (max-width: 768px) {
-			justify-content: center;
+			grid-template-columns: 1fr;
+			grid-gap: 2rem;
 		}
 	}
 
@@ -112,8 +108,11 @@
 	.type {
 		text-transform: capitalize;
 		text-align: center;
-		padding-top: 3rem;
+		padding-top: 2rem;
 		padding-bottom: 4rem;
 		margin: 0;
+		@media (max-width: 768px) {
+			padding-bottom: 2.5rem;
+		}
 	}
 </style>
