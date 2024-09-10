@@ -1,4 +1,4 @@
-export const prerender = true;
+export const prerender = false;
 
 import { WP_REST_API_URL } from '$env/static/private';
 import { error } from '@sveltejs/kit';
